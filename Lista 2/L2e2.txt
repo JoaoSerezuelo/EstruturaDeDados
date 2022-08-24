@@ -1,0 +1,15 @@
+2) Escreva um comentário em cada comando de atribuição explicando o que
+ele faz e o valor da variável à esquerda do '=' após sua execução.
+int main()
+{
+int y, *p, x;
+y = 0;
+p = &y;// o ponteiro P recebe o endereço de memória da variavel Y
+x = *p;//é atribuido a X o valor para qual o ponteiro P aponta no caso Y (x=0)
+x = 4;//é atribuido 4  a X (x=4)
+(*p)++;// incrementa uma unidade no valor ao qual Y está apontando (y=1)
+x--;//decrementa uma unidade de X (X=3)
+(*p) += x;//é incrementado o valor de X ao endereço de memórtia que P aponta (Y=4)
+printf ("y = %d\n", y);// É ESCRITO NA TELA Y = 4
+return(0);
+}
