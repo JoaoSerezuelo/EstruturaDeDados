@@ -9,22 +9,20 @@ typedef struct{
     char nome[50];
     Data data;
 }Pessoa;
+
 //struct No
 typedef struct no{
     Pessoa p;
     struct no *proximo;
 }No;
+
 //struct pilha
 typedef struct {
     No *topo;
     int tam;
 }Pilha;
 
-//criando pilha
-void criar_pilha(Pilha *p){
-    p->topo=NULL;
-    p->tam =0;
-}
+
 
 //Funções Pessoa
 Pessoa ler_pessoa(){
@@ -37,6 +35,13 @@ void imprimir_pessoa(Pessoa p){
     printf("\nNome: %s\nData: %2d/%2d/%4d\n", p.nome, p.data.dia, p.data.mes, p.data.ano);
 }
 
+//Pilha
+
+//criando pilha
+void criar_pilha(Pilha *p){
+    p->topo=NULL;
+    p->tam =0;
+}
 //push -> empilhar
 void push(Pilha *p){
     No *novo = malloc(sizeof(No));
@@ -49,7 +54,6 @@ void push(Pilha *p){
     else
         printf("\nErro ao alocar memoria!!!\n");
 }
-
 //pop -> desempilhar
 No* pop(Pilha *p){
     if(p->topo){
@@ -62,7 +66,6 @@ No* pop(Pilha *p){
         printf("\nPilha vazia!\n");
     return NULL;
 }
-
 //imprimir pilha
 void imprimir_pilha(Pilha *p){
     No *aux = p->topo;
