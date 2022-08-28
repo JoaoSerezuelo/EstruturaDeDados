@@ -14,6 +14,17 @@ typedef struct no{
     Pessoa p;
     struct no *proximo;
 }No;
+//struct pilha
+typedef struct {
+    No *topo;
+    int tam;
+}Pilha;
+
+//criando pilha
+void criar_pilha(Pilha *p){
+    p->topo=NULL;
+    p->tam =0;
+}
 
 //Funções Pessoa
 Pessoa ler_pessoa(){
@@ -27,23 +38,24 @@ void imprimir_pessoa(Pessoa p){
 }
 
 //push -> empilhar
-No* push(No *topo){
+void push(Pilha *p){
     No *novo = malloc(sizeof(No));
     if(novo){
         novo-> p = ler_pessoa();
-        novo-> proximo = topo;
-        return novo;
+        novo-> proximo = p->topo;
+        p->topo = novo;
+        p->tam++;
     }
     else
         printf("\nErro ao alocar memoria!!!\n");
-    return NULL;
 }
 
 //pop -> desempilhar
-No* pop(No **topo){
-    if(*topo != NULL){
-        No *remover = *topo;
-        *topo = remover->proximo;
+No* pop(Pilha *p){
+    if(p->topo){
+        No *remover = p->topo;
+        p->topo = remover->proximo;
+        p->tam--;
         return remover;
     }
     else
@@ -52,19 +64,23 @@ No* pop(No **topo){
 }
 
 //imprimir pilha
-void imprimir_pilha(No *topo){
-    printf("\n------------ Pilha -----------\n");
-    while(topo){
-        imprimir_pessoa(topo->p);
-        topo = topo->proximo;
+void imprimir_pilha(Pilha *p){
+    No *aux = p->topo;
+    printf("\n------------ Pilha tam: %i-----------\n",p->tam);
+    while(aux){
+        imprimir_pessoa(aux->p);
+        aux = aux->proximo;
     }
     printf("\n---------- Fim Pilha ----------\n");
 }
 
 int main()
 {
-    No *remover, *topo=NULL;
+    No *remover;
+    Pilha p;
     int opcao;
+
+    criar_pilha(&p);
 
     do{
         printf("\n0 - Sair\n1 - empilhar\n2 - desempilhar\n3 - imprimir\n");
@@ -72,10 +88,10 @@ int main()
         getchar();
         switch(opcao){
             case 1:
-                topo=push(topo);
+                push(&p);
                 break;
             case 2:
-                remover=pop(&topo);
+                remover=pop(&p);
                 if(remover){
                     printf("\n\nElemento removido com sucesso!\n");
                     imprimir_pessoa(remover->p);
@@ -85,7 +101,7 @@ int main()
                     printf("\nSem no a remover.\n");
                 break;
             case 3:
-                imprimir_pilha(topo);
+                imprimir_pilha(&p);
                 break;
             default:
                 if(opcao!=0)
