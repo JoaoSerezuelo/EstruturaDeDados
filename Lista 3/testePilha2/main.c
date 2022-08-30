@@ -24,7 +24,7 @@ typedef struct {
 
 
 
-//Fun��es Pessoa
+//Fun��es Pessoa
 Pessoa ler_pessoa(){
     Pessoa p;
     printf("\nDigite nome e data de nascimento dd mm aaaa:\n");
@@ -46,10 +46,10 @@ void criar_pilha(Pilha *p){
 void push(Pilha *p){
     No *novo = malloc(sizeof(No));
     if(novo){
-        novo-> p = ler_pessoa();
-        novo-> proximo = p->topo;
-        p->topo = novo;
-        p->tam++;
+        novo-> p = ler_pessoa();//ler pessoa
+        novo-> proximo = p->topo;//clona o topo antigo para o proximo da nova stutura que ta no topo
+        p->topo = novo;//topo é atualizado para o endereço da nova estrutura que esta no topo
+        p->tam++;//tamanho da pilha é atualizado
     }
     else
         printf("\nErro ao alocar memoria!!!\n");
@@ -57,10 +57,10 @@ void push(Pilha *p){
 //pop -> desempilhar
 No* pop(Pilha *p){
     if(p->topo){
-        No *remover = p->topo;
-        p->topo = remover->proximo;
-        p->tam--;
-        return remover;
+        No *remover = p->topo;//remover recebe o topo da pilha
+        p->topo = remover->proximo;//topo da pilha recebe o proximo da pilha(posição da estrutura que está embaixo)
+        p->tam--;//tamanho da pilha é atualizado
+        return remover;//retorna a estrutura que foi removida
     }
     else
         printf("\nPilha vazia!\n");
@@ -68,19 +68,19 @@ No* pop(Pilha *p){
 }
 //imprimir pilha
 void imprimir_pilha(Pilha *p){
-    No *aux = p->topo;
+    No *aux = p->topo;//aux recebe o topo da pilha
     printf("\n------------ Pilha tam: %i-----------\n",p->tam);
-    while(aux){
-        imprimir_pessoa(aux->p);
-        aux = aux->proximo;
+    while(aux){//enquanto aux for diferente de NULL
+        imprimir_pessoa(aux->p);//imprime a pessoa que esta sendo apontada por aux
+        aux = aux->proximo;//aux vai descendo na pilha
     }
     printf("\n---------- Fim Pilha ----------\n");
 }
 
 int main()
 {
-    No *remover;
-    Pilha p;
+    No *remover;//remover para recebe o topo da pilha
+    Pilha p;//pilha
     int opcao;
 
     criar_pilha(&p);
@@ -97,8 +97,8 @@ int main()
                 remover=pop(&p);
                 if(remover){
                     printf("\n\nElemento removido com sucesso!\n");
-                    imprimir_pessoa(remover->p);
-                    free(remover);
+                    imprimir_pessoa(remover->p);//imprime a pessoa que foi removida
+                    free(remover);//livra a memoria alocada para a pessoa que foi removida
                     remover=NULL;
                 }else
                     printf("\nSem no a remover.\n");
