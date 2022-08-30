@@ -5,7 +5,6 @@ int main()
 {
     char s[10]="abcde";
     char *cptr=NULL;
-    int i=0;
     cptr=&s[0];
     while(*cptr != '\0')
         cptr++;
