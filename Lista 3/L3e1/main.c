@@ -21,14 +21,18 @@ typedef struct {
     int tam;
 }Pilha;
 
-
+void limparBuffer() {
+    int ch;
+    while( (ch = fgetc(stdin)) != EOF && ch != '\n' ){}
+}
 
 //Funções Pessoa
 Pessoa ler_pessoa(){
     Pessoa p;
     printf("\nDigite nome e data de nascimento dd mm aaaa:\n");
-    scanf("%49[^\n]%d%d%d",p.nome,&p.data.dia,&p.data.mes,&p.data.ano);
-    fflush(stdin);
+    scanf("%s", p.nome);
+    limparBuffer();
+    scanf("%d%d%d",&p.data.dia,&p.data.mes,&p.data.ano);
     return p;
 }
 void imprimir_pessoa(Pessoa p){
@@ -61,17 +65,6 @@ void push(Pilha *p){
         printf("\nErro ao alocar memoria!!!\n");
 }
 //pop -> desempilhar
-No* pop(Pilha *p){
-    if(p->topo){
-        No *remover = p->topo;//remover recebe o topo da pilha
-        p->topo = remover->proximo;//topo da pilha recebe o proximo da pilha(posição da estrutura que está embaixo)
-        p->tam--;//tamanho da pilha é atualizado
-        return remover;//retorna a estrutura que foi removida
-    }
-    else
-        printf("\nPilha vazia!\n");
-    return NULL;
-}
 //imprimir pilha
 void imprimir_pilha(Pilha *p){
     No *aux = p->topo;//aux recebe o topo da pilha
@@ -82,9 +75,29 @@ void imprimir_pilha(Pilha *p){
     }
     printf("\n---------- Fim Pilha ----------\n");
 }
+
+No* pop(Pilha *p){
+
+    int quantidade = 2;
+
+    if(p->topo) {
+
+        while(quantidade --> 0) {
+            No *remover = p->topo;//remover recebe o topo da pilha
+            p->topo = remover->proximo;//topo da pilha recebe o proximo da pilha(posição da estrutura que está embaixo)
+            p->tam--;//tamanho da pilha é atualizado
+            printf("elemento %s removido com sucesso", remover->p.nome);
+            free(remover);
+        }
+    }
+    else
+        printf("\nPilha vazia!\n");
+    return NULL;
+}
+
 int main()
 {
-    No *remover;//remover para recebe o topo da pilha
+
     Pilha p;//pilha
     int opcao;
 
@@ -100,14 +113,7 @@ int main()
                 push(&p);
                 break;
             case 2:
-                remover=pop(&p);
-                if(remover){
-                    printf("\n\nElemento removido com sucesso!\n");
-                    imprimir_pessoa(remover->p);//imprime a pessoa que foi removida
-                    free(remover);//livra a memoria alocada para a pessoa que foi removida
-                    remover=NULL;
-                }else
-                    printf("\nSem no a remover.\n");
+                pop(&p);
                 break;
             case 3:
                 imprimir_pilha(&p);
@@ -120,4 +126,3 @@ int main()
 
     return 0;
 }
-
