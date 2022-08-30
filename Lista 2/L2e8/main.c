@@ -2,30 +2,31 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int main()
-{
-    typedef struct
-    {
-        int codigo;
-        char nome[30];
-        float preco;
-    } produto;
+typedef struct {
+	int codigo;
+	char nome[30];
+	float preco;
+} produto;
 
-    produto *p;
-    int i, n, codigo;
-    bool boleano=false;
+int quantidadeProduto; // ja que todas funcoes terao acesso;
 
-    printf("Quantos produtos deseja cadastrar? ");
-    scanf("%d", &n);
+produto *criarProduto() {
 
-    p = (produto*) malloc(n * sizeof(produto));//alocação de memória para o vetor de produtos
-    if(p == NULL)
-    {
-        printf("Memoria insuficiente");//se não houver memória suficiente, o programa é encerrado
-    }
-    //cadastro dos produtos
-    for (i = 0; i < n; i++)
-    {
+	produto *p = (produto*) malloc(quantidadeProduto * sizeof(produto));
+
+	if(!p) {
+		printf("erro de alocacao de memoria!");
+		return NULL;
+	}
+
+	else {
+		return p;
+	}
+}
+
+void cadastrarProduto(produto *p) {
+
+	for (int i = 0; i < quantidadeProduto; i++) {
         printf("*******************************\n");
         printf("\nDigite o codigo do produto: ");
         scanf("%d", &p[i].codigo);
@@ -34,28 +35,52 @@ int main()
         printf("Digite o preco do produto: ");
         scanf("%f", &p[i].preco);
     }
-    system("cls");
-    //lista de produtos cadastrados
-    printf("\nLista de produtos cadastrados:\n");
-    for (i = 0; i < n; i++)
-    {
+
+	system("cls||clear");
+}
+
+void listarProdutos(produto *p) {
+
+	printf("\nLista de produtos cadastrados:\n");
+
+    for (int i = 0; i < quantidadeProduto; i++) {
         printf("\nCodigo: %d\n", p[i].codigo);
         printf("Nome: %s\n", p[i].nome);
     }
+
     printf("********************************************************\n");
-    //busca do produto
-    printf("\nDigite o codigo do produto que deseja consultar: ");
+}
+
+void encontrarProduto(produto *p) {
+
+	bool encontrou;
+	int codigo;
+
+	printf("\nDigite o codigo do produto que deseja consultar: ");
+
     scanf("%d", &codigo);
-    for (i = 0; i < n; i++)
-    {
-        if (p[i].codigo == codigo)
-        {
+
+    for (int i = 0; i < quantidadeProduto; i++) {
+        if (p[i].codigo == codigo) {
             printf("\nPreco do produto: %.2f\n", p[i].preco);
-            boleano = true;
+            encontrou = true;
         }
     }
-    if( boleano == false)
+
+    if( encontrou == false)
         printf("\nProduto nao encontrado\n");
+}
+
+int main() {
+
+    printf("Quantos produtos deseja cadastrar? ");
+    scanf("%d", &quantidadeProduto);
+
+    produto *p = criarProduto();
+	cadastrarProduto(p);
+	listarProdutos(p);
+	encontrarProduto(p);
+   
     free(p);
     return 0;
 }
