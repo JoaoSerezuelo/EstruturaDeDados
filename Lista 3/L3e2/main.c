@@ -24,7 +24,7 @@ typedef struct {
     int tam;
 }Pilha;
 
-//Funções Pessoa
+//Funï¿½ï¿½es Pessoa
 Pessoa ler_pessoa(){
     Pessoa p;
     printf("\nDigite nome e data de nascimento dd mm aaaa:\n");
@@ -50,8 +50,8 @@ void push(Pilha *p){
     if(novo){
         novo-> p = ler_pessoa();//ler pessoa
         novo-> proximo = p->topo;//clona o topo antigo para o proximo da nova stutura que ta no topo
-        p->topo = novo;//topo é atualizado para o endereço da nova estrutura que esta no topo
-        p->tam++;//tamanho da pilha é atualizado
+        p->topo = novo;//topo ï¿½ atualizado para o endereï¿½o da nova estrutura que esta no topo
+        p->tam++;//tamanho da pilha ï¿½ atualizado
     }
     else
         printf("\nErro ao alocar memoria!!!\n");
@@ -67,22 +67,16 @@ void imprimir_pilha(Pilha *p){
     printf("\n---------- Fim Pilha ----------\n");
 }
 //pop
-No* popn(Pilha *p, int quantidade){
+void popn(Pilha *p, int quantidade){
 
-    if(p->topo) {
-
-        while(quantidade != 0) {
-            No *remover = p->topo;//remover recebe o topo da pilha
-            p->topo = remover->proximo;//topo da pilha recebe o proximo da pilha(posição da estrutura que está embaixo)
-            p->tam--;//tamanho da pilha é atualizado
-            printf("elemento %s removido com sucesso\n", remover->p.nome);
-            free(remover);
-            quantidade--;
-        }
+    while(quantidade != 0) {
+        No *remover = p->topo;//remover recebe o topo da pilha
+        p->topo = remover->proximo;//topo da pilha recebe o proximo da pilha(posiï¿½ï¿½o da estrutura que estï¿½ embaixo)
+        p->tam--;//tamanho da pilha ï¿½ atualizado
+        printf("elemento %s removido com sucesso\n", remover->p.nome);
+        free(remover);
+        quantidade--;
     }
-    else
-        printf("\nPilha vazia!\n");
-    return NULL;
 }
 
 
@@ -120,5 +114,5 @@ int main()
     }while(opcao!=0);
     return 0;
 }
-//fiz a mesma ideia do exercicio 1 só que agora alteei a
-//função pop para tirar n numeros escolhidos pelo usuario
+//fiz a mesma ideia do exercicio 1 sï¿½ que agora alteei a
+//funï¿½ï¿½o pop para tirar n numeros escolhidos pelo usuario
