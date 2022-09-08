@@ -75,23 +75,23 @@ void imprimir_pilha(Pilha *p){
     printf("\n---------- Fim Pilha ----------\n");
 }
 //pop
-No* pop(Pilha *p){
+void pop(Pilha *p){
 
     int quantidade = 2;
 
     if(p->topo) {
 
-        while(quantidade --> 0) {
+        while(quantidade !=0) {
             No *remover = p->topo;//remover recebe o topo da pilha
             p->topo = remover->proximo;//topo da pilha recebe o proximo da pilha(posição da estrutura que está embaixo)
             p->tam--;//tamanho da pilha é atualizado
-            printf("elemento %s removido com sucesso", remover->p.nome);
+            printf("\nelemento %s removido com sucesso\n", remover->p.nome);
             free(remover);
+            quantidade--;
         }
     }
     else
         printf("\nPilha vazia!\n");
-    return NULL;
 }
 
 int main()
@@ -106,7 +106,6 @@ int main()
         printf("\n0 - Sair\n1 - empilhar\n2 - desempilhar\n3 - imprimir\n");
         scanf("%d",&opcao);
         fflush(stdin);
-        getchar();
         switch(opcao){
             case 1:
                 push(&p);

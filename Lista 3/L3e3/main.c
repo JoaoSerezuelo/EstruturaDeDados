@@ -54,13 +54,32 @@ void imprimir_pilha(Pilha *p){
     else
         printf("\nPilha vazia\n");
 }
+Pilha copia_pilha(Pilha *p, Pilha *p2){ //ta errado
+    Pilha *pilhaAux; //ajudar no processo
+    criar_pilha(&pilhaAux);
+    No *no=p->topo;
+    //preenchendo a pilhaAux
+    while(no){
+        push(&pilhaAux);
+        no=no->proximo;
+    }
+    while(pilhaAux->topo){
+        No *noaux=pilhaAux->topo;
+        push(&p2);
+        pop(&pilhaAux);
+    }
+    free(pilhaAux);
+    return *p2;
+}
 int main()
 {
     Pilha p;//pilha 1
+    Pilha p2;//pilha 2
     int opcao;
     criar_pilha(&p);
+    criar_pilha(&p2);
     do{
-        printf("\n0 - Sair\n1 - empilhar\n2 - desempilhar\n3 - imprimir\n");
+        printf("\n0 - Sair\n1 - empilhar\n2 - desempilhar\n3 - imprimir\n4 - copiar pilha\n");
         scanf("%d",&opcao);
         fflush(stdin);
         system("cls");
@@ -73,6 +92,13 @@ int main()
                 break;
             case 3:
                 imprimir_pilha(&p);
+                break;
+            case 4:
+                p2=copia_pilha(&p,&p2);
+                printf("Pilha Original\n");
+                imprimir_pilha(&p);
+                printf("Pilha Copia\n");
+                imprimir_pilha(&p2);
                 break;
             default:
                 if(opcao!=0)
