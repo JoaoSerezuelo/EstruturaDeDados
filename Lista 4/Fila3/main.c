@@ -38,7 +38,7 @@ void inserir_com_prioridade(No **fila, int num){
             if(num>59){
                 //é a primeira prioridade?
                 if((*fila)->valor<60){//primeira prioridade
-                    novo->proximo=*fila;
+                    novo->proximo= *fila;
                     *fila=novo;
                 }
                 else{//já tem outras prioridades
