@@ -45,14 +45,14 @@ void inserir_na_fila(Fila *fila, Pessoa humano){
     No *novo=malloc(sizeof(No));
     if(novo){
         novo->p=humano;
-        novo->proximo=NULL;//TÁ INSERINDO NO FINAL POR ISSO PROXIMO VAI SER SEMPRE NULO
+        novo->proximo=NULL;//TÃ INSERINDO NO FINAL POR ISSO PROXIMO VAI SER SEMPRE NULO
         if(fila->primeiro==NULL){//FILA TA VAZIA AINDA
-            //posições sendo preenchidas com o no novo
+            //posiÃ§Ãµes sendo preenchidas com o no novo
             fila->primeiro=novo;
             fila->fim=novo;
         }
-        else{//fila não tá vazia
-            fila->fim->proximo=novo;//a variavel que tava no fim agora aponta p/ nova variavel que tá no fim
+        else{//fila nÃ£o tÃ¡ vazia
+            fila->fim->proximo=novo;//a variavel que tava no fim agora aponta p/ nova variavel que tÃ¡ no fim
             fila->fim=novo;//fim da fila recebe o novo no;
         }
         fila->tam++;
@@ -65,7 +65,7 @@ No* remover_da_fila(Fila *fila){
 
     if(fila->primeiro){
         remover=fila->primeiro;//removi o primeiro elmento da fila
-        fila->primeiro=remover->proximo;//primeiro elemneto da fila é atualizado
+        fila->primeiro=remover->proximo;//primeiro elemneto da fila Ã© atualizado
         fila->tam--;
     }
     else
@@ -92,7 +92,7 @@ void separa(Fila *f1,Fila *f2,int matricula){
     No *aux2=f1->primeiro;
     int x=1,i=0;
 
-    //rodei a fila 1 até achar a matricula que vai separar a fila
+    //rodei a fila 1 atÃ© achar a matricula que vai separar a fila
     while(aux){
         if(aux->p.matricula==matricula){
             break;
@@ -106,7 +106,7 @@ void separa(Fila *f1,Fila *f2,int matricula){
 
     //preenchi a fila 2 a partir da matricula que separou as filas
     do{
-        inserir_na_fila(&f2,aux->p);
+        inserir_na_fila(f2,aux->p);
         aux=aux->proximo;
         x--;
     }while(x!=0);
@@ -125,7 +125,7 @@ void separa(Fila *f1,Fila *f2,int matricula){
     }
     printf("\n----- FIM FILA -----\n");
     printf("\nFila 2: ");
-    imprimir(&f2);
+    imprimir(f2);
 }
 
 int main()
@@ -168,6 +168,7 @@ int main()
                 while(tamanho!=0){
                     removido=remover_da_fila(&fila2);
                     free(removido);
+                    tamanho--;
                     removido=NULL;
                 }
                 break;
