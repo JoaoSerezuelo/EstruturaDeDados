@@ -60,6 +60,33 @@ void inserir_no_meio(No **lista, int num, int ant){
     else
         printf("Erro ao alocar memoria!\n");
 }
+
+void inserir_ordenado(No **lista, int num){
+    No*novo=malloc(sizeof(No));
+    No *aux;
+    if(novo){
+        novo->valor=num;
+        //a lista esta vazia?
+        if(*lista==NULL){ //sim
+            novo->proximo=NULL;
+            *lista=novo
+        }//é o menor?
+        else if(novo->valor<(*lista)->valor){
+            novo->proximo=*lista;
+            *lista=novo;
+        }
+        else{
+            aux=*lista;
+            while(aux->proximo && novo->valor > aux->proximo->valor)
+                aux=aux->proximo;
+            novo->proximo=aux->proximo;
+            aux->proximo=novo;
+        }
+
+    }
+    else
+        printf("ERRO AO ALOCAR MEMORIA!\n");
+}
 //imprimir lista
 void imprimir(No *no){
    printf("\nLista: \n");
@@ -74,7 +101,7 @@ int main()
     int op,valor,anterior;
     No *lista=NULL;
     do{
-        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n");
+        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n5 - inserir ordenado\n");
         scanf("%i",&op);
         switch(op){
         case 1:
@@ -94,6 +121,11 @@ int main()
             break;
         case 4:
             imprimir(lista);
+            break;
+        case 5:
+            printf("Digite um valor: ");
+            scanf("%i",&valor);
+            inserir_ordenado(&lista,valor);
             break;
         default:
             if(op!=0)
