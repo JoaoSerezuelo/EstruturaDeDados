@@ -98,6 +98,29 @@ void inserir_ordenado(Lista *lista,int num){
     else
         printf("Erro ao alocar memoria!\n ");
 }
+//remover
+No* remover(Lista *lista, int num){
+    No *remover=NULL;
+    No *aux;
+    if(lista->inicio){
+        if(lista->inicio->valor==num){
+            remover=lista->inicio;
+            lista->inicio=remover->proximo;
+            lista->tam--;
+        }
+        else{
+            aux=lista->inicio;
+            while(aux->proximo && aux->proximo->valor!=num)
+                aux=aux->proximo;
+            if(aux->proximo){
+                remover=aux->proximo;
+                aux->proximo=remover->proximo;
+                lista->tam--;
+            }
+        }
+    }
+    return remover;
+}
 //imprimir lista
 void imprimir(Lista lista){
     No *no=lista.inicio;
@@ -112,9 +135,10 @@ int main()
 {
     int op,valor,anterior;
     Lista lista;
+    No *removido=NULL;
     criar_lista(&lista);
     do{
-        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n5 - inserir ordenado\n");
+        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n5 - inserir ordenado\n6 - remover\n");
         scanf("%i",&op);
         switch(op){
         case 1:
@@ -139,6 +163,18 @@ int main()
             printf("Digite um valor: ");
             scanf("%i",&valor);
             inserir_ordenado(&lista,valor);
+            break;
+        case 6:
+            printf("Digite um valor: ");
+            scanf("%i",&valor);
+            removido=remover(&lista,valor);
+            if(removido){
+                printf("Elemento removido: %i\n",removido->valor);
+                free(removido);
+            }
+            else{
+                printf("Elemento inesistente\n");
+            }
             break;
         default:
             if(op!=0)

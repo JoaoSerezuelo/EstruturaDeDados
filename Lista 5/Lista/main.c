@@ -96,12 +96,34 @@ void imprimir(No *no){
    }
    printf("\nFim\n");
 }
+//remover
+No* remover(No **lista, int num){
+    No *remover=NULL;
+    No *aux;
+    if(*lista){
+        if((*lista)->valor==num){
+            remover=*lista;
+            *lista=remover->proximo
+        }
+        else{
+            aux=*lista;
+            while(aux->proximo && aux->proximo != num)
+                aux=aux->proximo;
+            if(aux->proximo){
+                remover=aux->proximo;
+                aux->proximo=remover->proximo;
+            }
+        }
+    }
+    return remover;
+}
 int main()
 {
     int op,valor,anterior;
     No *lista=NULL;
+    No *removido;
     do{
-        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n5 - inserir ordenado\n");
+        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n5 - inserir ordenado\n6 - remover\n");
         scanf("%i",&op);
         switch(op){
         case 1:
@@ -126,6 +148,15 @@ int main()
             printf("Digite um valor: ");
             scanf("%i",&valor);
             inserir_ordenado(&lista,valor);
+            break;
+        case 6:
+            printf("Digite um valor a ser removido: ");
+            scanf("%i",&valor);
+            removido=remover(&lista,valor);
+            if(removido){
+                printf("Elemento removido: %i\n",remover->valor);
+                free(removido);
+            }
             break;
         default:
             if(op!=0)
