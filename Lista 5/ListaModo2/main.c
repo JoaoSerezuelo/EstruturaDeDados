@@ -20,9 +20,9 @@ void criar_lista(Lista *lista){
 void inserir_no_inicio(Lista *lista,int num){
     No *novo=malloc(sizeof(No));
     if(novo){
-         novo->valor=num;
-         novo->proximo=lista->inicio;
-         lista->inicio=novo;
+         novo->valor=num;//valor do novo nó recebe o valor passado por parametro
+         novo->proximo=lista->inicio;//o proximo do novo nó recebe que etsva no inicio da lista
+         lista->inicio=novo;//o inicio da lista recebe o novo nó
          lista->tam++;
     }
     else
@@ -32,17 +32,17 @@ void inserir_no_inicio(Lista *lista,int num){
 void inserir_no_fim(Lista *lista,int num){
     No *aux, *novo=malloc(sizeof(No));
     if(novo){
-        novo->valor=num;
-        novo->proximo=NULL;
-        //� o primeiro?
-         if(lista->inicio==NULL)
-            lista->inicio=novo;
-         else{
-            aux=lista->inicio;
-            while(aux->proximo){
-                aux=aux->proximo;
+        novo->valor=num;//valor do novo nó recebe o valor passado por parametro
+        novo->proximo=NULL;//o proximo do novo nó recebe NULL
+        //� o primeiro?
+         if(lista->inicio==NULL)//se a lista tiver vazia
+            lista->inicio=novo;//o inicio da lista recebe o novo nó
+         else{//se a lista nao tiver vazia
+            aux=lista->inicio;//aux recebe o inicio da lista
+            while(aux->proximo){//percorre a lista ate o ultimo nó
+                aux=aux->proximo;//aux recebe o proximo de aux 
             }
-            aux->proximo=novo;
+            aux->proximo=novo;//o proximo do ultimo nó recebe o novo nó
          }
          lista->tam++;
     }
@@ -53,19 +53,19 @@ void inserir_no_fim(Lista *lista,int num){
 void inserir_no_meio(Lista *lista, int num, int ant){
     No *aux,*novo=malloc(sizeof(No));
     if(novo){
-        novo->valor=num;
-        //� o primeiro?
-        if(lista->inicio==NULL){
-            novo->proximo=NULL;
-            lista->inicio=novo;
+        novo->valor=num;//valor do novo nó recebe o valor passado por parametro
+        //� o primeiro?
+        if(lista->inicio==NULL){//se a lista tiver vazia
+            novo->proximo=NULL;//o proximo do novo nó recebe NULL
+            lista->inicio=novo;//o inicio da lista recebe o novo nó
         }
-        else{
-            aux=lista->inicio;
-            while(aux->valor != ant && aux->proximo){
-                aux=aux->proximo;
+        else{//se a lista nao tiver vazia
+            aux=lista->inicio;//aux recebe o inicio da lista
+            while(aux->valor != ant && aux->proximo){//percorre a lista ate o ultimo nó ou ate achar o valor anterior
+                aux=aux->proximo;//aux recebe o proximo de aux
             }
-            novo->proximo=aux->proximo;
-            aux->proximo=novo;
+            novo->proximo=aux->proximo;//o proximo do novo nó recebe o proximo de aux
+            aux->proximo=novo;//o proximo de aux recebe o novo nó
         }
         lista->tam++;
     }
@@ -77,21 +77,21 @@ void inserir_ordenado(Lista *lista,int num){
     No *novo=malloc(sizeof(No));
     No *aux;
     if(novo){
-        novo->valor=num;
-        if(lista->inicio==NULL){
-            novo->proximo=NULL;
-            lista->inicio=novo;
+        novo->valor=num;//valor do novo nó recebe o valor passado por parametro
+        if(lista->inicio==NULL){//se a lista tiver vazia
+            novo->proximo=NULL;//o proximo do novo nó recebe NULL
+            lista->inicio=novo;//o inicio da lista recebe o novo nó
         }
-        else if(novo->valor < lista->inicio->valor){
-            novo->proximo=lista->inicio;
-            lista->inicio=novo;
+        else if(novo->valor < lista->inicio->valor){//se o valor do novo nó for menor que o valor do primeiro nó
+            novo->proximo=lista->inicio;//o proximo do novo nó recebe o inicio da lista
+            lista->inicio=novo;//o inicio da lista recebe o novo nó
         }
         else{
             aux=lista->inicio;
-            while(aux->proximo && novo->valor > aux->proximo->valor)
+            while(aux->proximo && novo->valor > aux->proximo->valor)//percorre a lista ate o ultimo nó ou ate achar um valor maior que o valor do novo nó
                 aux=aux->proximo;
-            novo->proximo=aux->proximo;
-            aux->proximo=novo;
+            novo->proximo=aux->proximo;//o proximo do novo nó recebe o proximo de aux
+            aux->proximo=novo;//o proximo de aux recebe o novo nó
         }
         lista->tam++;
     }
@@ -102,19 +102,19 @@ void inserir_ordenado(Lista *lista,int num){
 No* remover(Lista *lista, int num){
     No *remover=NULL;
     No *aux;
-    if(lista->inicio){
-        if(lista->inicio->valor==num){
-            remover=lista->inicio;
-            lista->inicio=remover->proximo;
-            lista->tam--;
+    if(lista->inicio){//se a lista nao estiver vazia
+        if(lista->inicio->valor==num){//se o valor do primeiro nó for igual ao valor passado por parametro
+            remover=lista->inicio;//o nó a ser removido recebe o inicio da lista
+            lista->inicio=remover->proximo;//o inicio da lista recebe o proximo do nó a ser removido
+            lista->tam--;//diminui o tamanho da lista
         }
         else{
-            aux=lista->inicio;
-            while(aux->proximo && aux->proximo->valor!=num)
-                aux=aux->proximo;
-            if(aux->proximo){
-                remover=aux->proximo;
-                aux->proximo=remover->proximo;
+            aux=lista->inicio;//aux recebe o inicio da lista 
+            while(aux->proximo && aux->proximo->valor!=num)//percorre a lista ate o ultimo nó ou ate achar o valor passado por parametro
+                aux=aux->proximo;//aux recebe o proximo de aux
+            if(aux->proximo){//se o proximo de aux nao for NULL
+                remover=aux->proximo;//o nó a ser removido recebe o proximo de aux
+                aux->proximo=remover->proximo;//o proximo de aux recebe o proximo do nó a ser removido
                 lista->tam--;
             }
         }
