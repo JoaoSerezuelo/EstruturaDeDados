@@ -1,60 +1,64 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//no
+
 typedef struct no{
     int valor;
     struct no *proximo;
 }No;
 
-//inserir no inicio
-void inserir_no_inicio(No **lista,int num){
-    No *novo=malloc(sizeof(No));
+// procedimento para inserir no início
+void inserir_no_inicio(No **lista, int num){
+    No *novo = malloc(sizeof(No));
+
     if(novo){
-         novo->valor=num;
-         novo->proximo=*lista;
-         *lista=novo;
+        novo->valor = num;
+        novo->proximo = *lista;
+        *lista = novo;
     }
     else
         printf("Erro ao alocar memoria!\n");
 }
-//inserir no fim
-void inserir_no_fim(No **lista,int num){
-    No *aux, *novo=malloc(sizeof(No));
+
+// procedimento para inserir no fim
+void inserir_no_fim(No **lista, int num){
+    No *aux, *novo = malloc(sizeof(No));
+
     if(novo){
-        novo->valor=num;
-        novo->proximo=NULL;
-        //é o primeiro?
-         if(*lista==NULL)
-            *lista=novo;
-         else{
-            aux=*lista;
-            while(aux->proximo){
-                aux=aux->proximo;
-            }
-            aux->proximo=novo;
-         }
+        novo->valor = num;
+        novo->proximo = NULL;
+
+        // é o primeiro?
+        if(*lista == NULL)
+            *lista = novo;
+        else{
+            aux = *lista;
+            while(aux->proximo)
+                aux = aux->proximo;
+            aux->proximo = novo;
+        }
     }
     else
         printf("Erro ao alocar memoria!\n");
 }
-//inserir no meio
+
+// procedimento para inserir no meio
 void inserir_no_meio(No **lista, int num, int ant){
-    No *aux,*novo=malloc(sizeof(No));
+    No *aux, *novo = malloc(sizeof(No));
+
     if(novo){
-        novo->valor=num;
-        //é o primeiro?
-        if(*lista==NULL){
-            novo->proximo=NULL;
-            *lista=novo;
+        novo->valor = num;
+        // é o primeiro?
+        if(*lista == NULL){
+            novo->proximo = NULL;
+            *lista = novo;
         }
         else{
-            aux=*lista;
-            while(aux->valor != ant && aux->proximo){
-                aux=aux->proximo;
-            }
-            novo->proximo=aux->proximo;
-            aux->proximo=novo;
+            aux = *lista;
+            while(aux->valor != ant && aux->proximo)
+                aux = aux->proximo;
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
         }
     }
     else
@@ -62,106 +66,131 @@ void inserir_no_meio(No **lista, int num, int ant){
 }
 
 void inserir_ordenado(No **lista, int num){
-    No*novo=malloc(sizeof(No));
-    No *aux;
+    No *aux, *novo = malloc(sizeof(No));
+
     if(novo){
-        novo->valor=num;
-        //a lista esta vazia?
-        if(*lista==NULL){ //sim
-            novo->proximo=NULL;
-            *lista=novo
-        }//é o menor?
-        else if(novo->valor<(*lista)->valor){
-            novo->proximo=*lista;
-            *lista=novo;
+        novo->valor = num;
+        // a lista está vazia?
+        if(*lista == NULL){
+            novo->proximo = NULL;
+            *lista = novo;
+        } // é o menor?
+        else if(novo->valor < (*lista)->valor){
+            novo->proximo = *lista;
+            *lista = novo;
         }
         else{
-            aux=*lista;
+            aux = *lista;
             while(aux->proximo && novo->valor > aux->proximo->valor)
-                aux=aux->proximo;
-            novo->proximo=aux->proximo;
-            aux->proximo=novo;
+                aux = aux->proximo;
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
         }
-
     }
     else
-        printf("ERRO AO ALOCAR MEMORIA!\n");
+        printf("Erro ao alocar memoria!\n");
 }
-//imprimir lista
-void imprimir(No *no){
-   printf("\nLista: \n");
-   while(no){
-       printf("%i\n",no->valor);
-       no=no->valor;
-   }
-   printf("\nFim\n");
-}
-//remover
+
 No* remover(No **lista, int num){
-    No *remover=NULL;
-    No *aux;
+    No *aux, *remover = NULL;
+
     if(*lista){
-        if((*lista)->valor==num){
-            remover=*lista;
-            *lista=remover->proximo
+        if((*lista)->valor == num){
+            remover = *lista;
+            *lista = remover->proximo;
         }
         else{
-            aux=*lista;
-            while(aux->proximo && aux->proximo != num)
-                aux=aux->proximo;
+            aux = *lista;
+            while(aux->proximo && aux->proximo->valor != num)
+                aux = aux->proximo;
             if(aux->proximo){
-                remover=aux->proximo;
-                aux->proximo=remover->proximo;
+                remover = aux->proximo;
+                aux->proximo = remover->proximo;
             }
         }
     }
     return remover;
 }
-int main()
-{
-    int op,valor,anterior;
-    No *lista=NULL;
-    No *removido;
+
+No* buscar(No **lista, int num){
+    No *aux, *no = NULL;
+
+    aux = *lista;
+    while(aux && aux->valor != num)
+        aux = aux->proximo;
+    if(aux)
+        no = aux;
+    return no;
+}
+
+void imprimir(No *no){
+    printf("\n\tLista: ");
+    while(no){
+        printf("%d ", no->valor);
+        no = no->proximo;
+    }
+    printf("\n\n");
+}
+
+int main(){
+
+    int opcao, valor, anterior;
+    No *removido, *lista = NULL;
+
     do{
-        printf("\n0 - sair\n1 - inserir inicio\n2 - inserir final\n3 - inserir meio\n4 - imprimir\n5 - inserir ordenado\n6 - remover\n");
-        scanf("%i",&op);
-        switch(op){
+        printf("\n\t0 - Sair\n\t1 - InserirI\n\t2 - inserirF\n\t3 - InserirM\n\t4 - InserirO\n\t5 - Remover\n\t6 - Imprimir\n\t7 - Buscar\n");
+        scanf("%d", &opcao);
+
+        switch(opcao){
         case 1:
             printf("Digite um valor: ");
-            scanf("%i",&valor);
-            inserir_no_inicio(&lista,valor);
+            scanf("%d", &valor);
+            inserir_no_inicio(&lista, valor);
             break;
         case 2:
             printf("Digite um valor: ");
-            scanf("%i",&valor);
-            inserir_no_fim(&lista,valor);
+            scanf("%d", &valor);
+            inserir_no_fim(&lista, valor);
             break;
         case 3:
             printf("Digite um valor e o valor de referencia: ");
-            scanf("%i%i",&valor,&anterior);
-            inserir_no_meio(&lista,valor,anterior);
+            scanf("%d%d", &valor, &anterior);
+            inserir_no_meio(&lista, valor, anterior);
             break;
         case 4:
-            imprimir(lista);
+            printf("Digite um valor: ");
+            scanf("%d", &valor);
+            inserir_ordenado(&lista, valor);
             break;
         case 5:
-            printf("Digite um valor: ");
-            scanf("%i",&valor);
-            inserir_ordenado(&lista,valor);
-            break;
-        case 6:
             printf("Digite um valor a ser removido: ");
-            scanf("%i",&valor);
-            removido=remover(&lista,valor);
+            scanf("%d", &valor);
+            removido = remover(&lista, valor);
             if(removido){
-                printf("Elemento removido: %i\n",remover->valor);
+                printf("Elemento a ser removido: %d\n", removido->valor);
                 free(removido);
             }
+            else
+                printf("Elemento inexistente!\n");
+            break;
+        case 6:
+            imprimir(lista);
+            break;
+        case 7:
+            printf("Digite um valor a ser buscado: ");
+            scanf("%d", &valor);
+            removido = buscar(&lista, valor);
+            if(removido)
+                printf("Elemento encontrado: %d\n", removido->valor);
+            else
+                printf("Elemento nao encontrado!\n");
             break;
         default:
-            if(op!=0)
+            if(opcao != 0)
                 printf("Opcao invalida!\n");
         }
-    }while(op!=0);
+
+    }while(opcao != 0);
+
     return 0;
 }
