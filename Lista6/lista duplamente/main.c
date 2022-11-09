@@ -59,6 +59,7 @@ void inserir_no_meio(No **lista, int num, int ant){
         // é o primeiro?
         if(*lista == NULL){
             novo->proximo = NULL;
+            novo->anterior=NULL;
             *lista = novo;
         }
         else{
@@ -66,6 +67,8 @@ void inserir_no_meio(No **lista, int num, int ant){
             while(aux->valor != ant && aux->proximo)
                 aux = aux->proximo;
             novo->proximo = aux->proximo;
+            aux->proximo->anterior=novo;
+            novo->anterior=aux;
             aux->proximo = novo;
         }
     }
@@ -81,10 +84,12 @@ void inserir_ordenado(No **lista, int num){
         // a lista está vazia?
         if(*lista == NULL){
             novo->proximo = NULL;
+            novo->anterior=NULL;
             *lista = novo;
         } // é o menor?
         else if(novo->valor < (*lista)->valor){
             novo->proximo = *lista;
+            (*lista)->anterior=novo;
             *lista = novo;
         }
         else{
@@ -92,6 +97,8 @@ void inserir_ordenado(No **lista, int num){
             while(aux->proximo && novo->valor > aux->proximo->valor)
                 aux = aux->proximo;
             novo->proximo = aux->proximo;
+            aux->proximo->anterior=novo;
+            novo->anterior=aux;
             aux->proximo = novo;
         }
     }
@@ -106,6 +113,8 @@ No* remover(No **lista, int num){
         if((*lista)->valor == num){
             remover = *lista;
             *lista = remover->proximo;
+            if(*lista)
+                (*lista)->anterior=NULL;
         }
         else{
             aux = *lista;
@@ -114,6 +123,9 @@ No* remover(No **lista, int num){
             if(aux->proximo){
                 remover = aux->proximo;
                 aux->proximo = remover->proximo;
+                if(aux->proximo)
+                    aux->proximo->anterior=aux;
+
             }
         }
     }
