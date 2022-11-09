@@ -84,7 +84,7 @@ No* remover_da_fila(Fila *fila){
 }
 void imprimir_fila(Fila fila){
     No *aux=NULL;
-    aux=fila.primeiro;
+    aux=fila->primeiro;
     printf("\n----- FILA ---------\n");
     while(aux){
         printf("%d | ",aux->valor);
@@ -107,7 +107,7 @@ void inverte(Fila *fila){
         push(&p,aux);
     }
     //esvazio a pilha e preencho a fila
-    while(p!=NULL){
+    while(p){
         removido=pop(&p);
         aux=removido->valor;
         free(removido);
