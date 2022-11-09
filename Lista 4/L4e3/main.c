@@ -130,19 +130,19 @@ void inverte(Fila *fila) {
     Pilha *pilha = criarPilha();
     inicializar(pilha);
 
-    No *no = fila->primeiro;
+    No *no = fila->primeiro;//no recebe o primeiro elemento da fila
 
-    while(no) {
-        push(pilha, no->valor);
-        no = no->proximo;
-        remover_da_fila(fila);
+    while(no) {//enquanto no for diferente de nulo
+        push(pilha, no->valor);//empilha o valor do no
+        no = no->proximo;//no recebe o proximo elemento da fila
+        remover_da_fila(fila);//remove o primeiro elemento da fila
     }
 
     no = pilha->topo;
 
     while(no) {
-        inserir_na_fila(fila, no->valor);
-        no = no->proximo;
+        inserir_na_fila(fila, no->valor);//insere o valor do no na fila
+        no = no->proximo;//no recebe o proximo elemento da pilha
     }
 
     liberarPilha(pilha);
