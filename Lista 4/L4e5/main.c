@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 typedef struct{
     char nome[50];
@@ -21,7 +22,9 @@ typedef struct{
 Aviao ler_av(){
     Aviao a;
     printf("Digite a companhia area e o codigo do aviao: ");
+    setbuf(stdin,NULL);
     scanf("%s",a.nome);
+    setbuf(stdin,NULL);
     scanf("%s",a.codigo);
 }
 void imprimir_aviao(Aviao av){
@@ -83,9 +86,9 @@ int main()
     Aviao av;
 
     criar_fila(&fila);
-
+    setlocale(LC_ALL,"");
     do{
-        printf("\n0 - Sair\n1 - Inserir\n2 - Remover\n3 - Imprimir\n");
+        printf("\n0 - Sair\n1 - adicionar aviao a fila de espera\n2 - autorizar decolagem\n3 - Imprimir todos os avioes\n4 - avioes esperando\n5 - caracteristicas do primeiro aviao\n");
         scanf("%i",&op);
         system("cls");
         switch(op){
@@ -96,7 +99,7 @@ int main()
         case 2:
             removido=remover_da_fila(&fila);
             if(removido){
-                printf("Removido: \n");
+                printf("aviao que decolou: \n");
                 imprimir_aviao(removido->av);
                 printf("\n");
                 free(removido);
@@ -105,6 +108,13 @@ int main()
             break;
         case 3:
             imprimir(&fila);
+            break;
+        case 4:
+            printf("avioes esperando: %i\n",fila.tam);
+            break;
+        case 5:
+            printf("informacoes primeiro aviao: ");
+            imprimir_aviao(fila.primeiro->av);
             break;
         default:
             if(op!=0)
