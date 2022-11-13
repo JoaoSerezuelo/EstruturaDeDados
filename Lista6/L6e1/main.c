@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 //aluno
-typedef struct no{
+typedef struct {
     char nome[50];
     int matricula;
 }Aluno;
@@ -80,7 +80,7 @@ void inserir_no_meio(No **lista, Aluno newAluno, Aluno anteriorAluno){
         }
         else{//nao
             aux = *lista;// aux aponta para o primeiro no
-            while(aux->a != anteriorAluno && aux->proximo)// enquanto o valor do aux for diferente do valor do no anterior e o proximo do aux nao for NULL
+            while(aux->a.matricula!=anteriorAluno.matricula && aux->proximo)// enquanto o valor do aux for diferente do valor do no anterior e o proximo do aux nao for NULL
                 aux = aux->proximo;// aux aponta para o proximo no
             novo->proximo = aux->proximo;// o proximo do novo no aponta para o proximo do no anterior
             aux->proximo->anterior=novo;// o anterior do proximo do no anterior aponta para o novo no
@@ -103,7 +103,7 @@ void inserir_ordenado(No **lista, Aluno aluno){//inserir ordenar por numero de m
             novo->anterior=NULL;// aponta para NULL pq o anterior do primeiro no e null
             *lista = novo;// o primeiro no aponta para o novo no
         } // � o menor?
-        else if(novo->a.matricula < (*lista)->matricula){//sim
+        else if(novo->a.matricula < (*lista)->a.matricula){//sim
             novo->proximo = *lista;// o proximo do novo no aponta para o primeiro no
             (*lista)->anterior=novo;// o anterior do primeiro no aponta para o novo no
             *lista = novo;// o primeiro no aponta para o novo no
@@ -127,7 +127,7 @@ No* remover(No **lista, Aluno aluno){
     No *aux, *remover = NULL;
 
     if(*lista){// se a lista nao estiver vazia
-        if((*lista)->a == aluno){// se o primeiro no for o no a ser removido
+        if((*lista)->a.matricula == aluno.matricula){// se o primeiro no for o no a ser removido
             remover = *lista;// remover aponta para o primeiro no
             *lista = remover->proximo;// o primeiro no aponta para o proximo do no a ser removido
             if(*lista)// se o primeiro no nao for NULL
@@ -135,7 +135,7 @@ No* remover(No **lista, Aluno aluno){
         }
         else{// se o primeiro no nao for o no a ser removido
             aux = *lista;// aux aponta para o primeiro no
-            while(aux->proximo && aux->proximo->valor != num)// enquanto o proximo do aux nao for NULL e o valor do proximo do aux for diferente do valor do no a ser removido
+            while(aux->proximo && aux->proximo->a.matricula != aluno.matricula)// enquanto o proximo do aux nao for NULL e o valor do proximo do aux for diferente do valor do no a ser removido
                 aux = aux->proximo;// aux aponta para o proximo no
             if(aux->proximo){// se o proximo do aux nao for NULL
                 remover = aux->proximo;// remover aponta para o proximo do aux
@@ -153,7 +153,7 @@ No* buscar(No **lista, Aluno aluno){
     No *aux, *no = NULL;
 
     aux = *lista;// aux aponta para o primeiro no
-    while(aux && aux->a!= aluno)// enquanto aux nao for NULL e o valor do aux for diferente do valor do no a ser buscado
+    while(aux && aux->a.matricula!= aluno.matricula)// enquanto aux nao for NULL e o valor do aux for diferente do valor do no a ser buscado
         aux = aux->proximo;// aux aponta para o proximo no
     if(aux)// se aux nao for NULL
         no = aux;// no aponta para o aux
@@ -179,7 +179,7 @@ No* ultimo(No **lista){
 }
 void imprimir_contrario(No *no){
 
-    printf("\n\tLista: ");
+    printf("\nLista:\n");
     while(no){// enquanto no nao for NULL
         imprimir_aluno(no->a);// imprime o valor do no
         printf("\n");
@@ -193,7 +193,7 @@ int main(){
     No *removido, *lista = NULL;// ponteiro para o no removido e ponteiro para o primeiro no da lista
     Aluno atual, anterior;
     do{
-        printf("\n\t0 - Sair\n\t1 - Inserir Inicio\n\t2 - inserir Final\n\t3 - Inserir Meio\n\t4 - Inserir Ordenado\n\t5 - Remover\n\t6 - Imprimir\n\t7 - Buscar\n8 - imprimir ao contrario\n");
+        printf("\n\t0 - Sair\n\t1 - Inserir Inicio\n\t2 - inserir Final\n\t3 - Inserir Meio\n\t4 - Inserir Ordenado\n\t5 - Remover\n\t6 - Imprimir\n\t7 - Buscar\n\t8 - imprimir ao contrario\n");
         scanf("%d", &opcao);
 
         switch(opcao){
@@ -208,16 +208,16 @@ int main(){
         case 3:// inserir no meio
             atual=ler_aluno();
             printf("Digite o aluno de referencia:\n");
-            anterior=ler_aluno()
+            anterior=ler_aluno();
             inserir_no_meio(&lista,atual, anterior);
             break;
         case 4:// inserir ordenado
-            atual=ler_aluno()
+            atual=ler_aluno();
             inserir_ordenado(&lista, atual);
             break;
         case 5:// remover
             printf("Digite um aluno a ser removido: \n");
-            atual=ler_aluno()
+            atual=ler_aluno();
             removido = remover(&lista, atual);
             if(removido){
                 printf("Elemento a ser removido: \n");
