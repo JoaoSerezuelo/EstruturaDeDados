@@ -6,7 +6,7 @@ typedef struct no{
     struct no *direita, *esquerda;
 }NoArv;
 //inserir(&raiz,valor)
- void inserir(NoArv **raiz, int num){
+ void inserir(NoArv **raiz, int num){//versao recursiva e menos eficiente
     if(*raiz==NULL){//se a raiz for nula
         *raiz=malloc(sizeof(NoArv));//aloca memoria
         (*raiz)->valor=num;//atribui o valor
@@ -81,12 +81,88 @@ NoArv* buscar_v1(NoArv *raiz, int num){//recursiva
     else//se raiz for NULL
         return NULL;
 }
+//buscar_v2(raiz,valor)
+NoArv* buscar_v2(NoArv *raiz, int num){//mais eficiente
+    while(raiz){
+        if(num<raiz->valor)//se o valor for menor que o valor da raiz
+            raiz=raiz->esquerda;//caminha para a esquerda
+        else if(num>raiz->valor)//se o valor for maior que o valor da raiz
+            raiz=raiz->direita;//caminha para a direita
+        else//se o valor for igual ao valor da raiz
+            return raiz;//retorna a raiz
+    }
+    return NULL;
+}
+//quantidade de Nos -
+//quantidadeNos(raiz);
+int quantidadeNos(NoArv *raiz){
+    if(raiz==NULL)//se raiz for nula
+        return 0;//retorna 0
+    else//se raiz for diferente de nula
+        return 1+quantidadeNos(raiz->esquerda)+quantidadeNos(raiz->direita);//vai contar a quantidade de nos da esquerda e da direita com recursividade
+    //podia usar ternariio
+    //return(raiz==null)?0:1+quantidadeNos(raiz->esquerda)+quantidadeNos(raiz->direita);
+}
+//quantidade de folhas
+int quantidadeFolhas(NoArv *raiz){
+    if(raiz==NULL)//se raiz for nula
+        return 0;//retorna 0 para a soma
+    else if(raiz->esquerda==NULL && raiz->direita==NULL)//e uma folha
+        return 1;//retorna 1 para a soma
+    else
+        return quantidadeFolhas(raiz->esquerda)+quantidadeFolhas(raiz->direita);//soma com recursividade
+}
+
 int main()
 {
     NoArv *raiz=NULL;
-    NoArv busca;//se busca for igual a null nao foi encontrado
-    int valor=10;
-    inserir(&raiz,valor);
-    inserir2(&raiz,valor);
+    NoArv *busca;//se busca for igual a null nao foi encontrado
+    int valor, op;
+    //fazer interativa
+    do{
+        printf("\n0 - sair\n1 - inserir\n2 - PreOrdem\n3 - EmOrdem\n4 - PosOrdem\n5 - buscar\n6 - qtd nos\n7 - qtd folhas\n");
+        scanf("%d",&op);
+        switch(op){
+            case 1:
+                printf("Digite um valor: ");
+                scanf("%d",&valor);
+                inserir2(&raiz,valor);
+                break;
+            case 2:
+                printf("pre ordem: ");
+                PreOrdem(raiz);
+                printf("\n");
+                break;
+            case 3:
+                printf("Em ordem: ");
+                EmOrdem(raiz);
+                printf("\n");
+                break;
+            case 4:
+                printf("pos ordem: ");
+                PosOrdem(raiz);
+                printf("\n");
+                break;
+            case 5:
+                printf("digite valor a ser procurado: ");
+                scanf("%d",&valor);
+                busca=buscar_v2(raiz,valor);
+                if(busca)
+                    printf("valor encontrado: %d\n",busca->valor);
+                else
+                    printf("valor n�o encontrado\n");
+                break;
+            case 6:
+                printf("qtd de nos: %d\n",quantidadeNos(raiz));
+                break;
+            case 7:
+                printf("qtd folhas: %d\n",quantidadeFolhas(raiz));
+                break;
+            default:
+                if(op!=0)
+                    printf("op invalida\n");
+        }
+
+    }while(op!=0);
     return 0;
 }
