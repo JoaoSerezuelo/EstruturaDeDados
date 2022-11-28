@@ -112,6 +112,46 @@ int quantidadeFolhas(NoArv *raiz){
     else
         return quantidadeFolhas(raiz->esquerda)+quantidadeFolhas(raiz->direita);//soma com recursividade
 }
+//altura
+int altuara(NoArv *raiz){
+   if(raiz==NULL)
+        return -1;
+   else{
+        int esq=altuara(raiz->esquerda);
+        int dir=altuara(raiz->direita);
+        if(esq>dir)
+            return esq+1;
+        else
+            return dir+1;
+   }
+}
+//remocao
+NoArv* remover(NoArv *raiz, int chave){
+    if(raiz==NULL){
+        printf("valor nao encontrado!\n");
+        return NULL;
+    }
+    else{//procura no a ser removido
+        if(raiz->valor==chave){
+            //remove nos folhas
+            if(raiz->esquerda==NULL && raiz->direita==NULL){
+                free(raiz);
+                printf("Elemento folha removido: %d!\n",chave);
+                return NULL;
+            }
+            else{
+                //remove nos que possuem um 1 ou 2 filhos
+            }
+        }
+        else{
+            if(chave<raiz->valor)
+                raiz->esquerda=remover(raiz->esquerda,chave);
+            else
+                raiz->direita=remover(raiz->direita,chave);
+            return raiz;
+        }
+    }
+}
 
 int main()
 {
@@ -120,7 +160,7 @@ int main()
     int valor, op;
     //fazer interativa
     do{
-        printf("\n0 - sair\n1 - inserir\n2 - PreOrdem\n3 - EmOrdem\n4 - PosOrdem\n5 - buscar\n6 - qtd nos\n7 - qtd folhas\n");
+        printf("\n0 - sair\n1 - inserir\n2 - PreOrdem\n3 - EmOrdem\n4 - PosOrdem\n5 - buscar\n6 - qtd nos\n7 - qtd folhas\n8 - altura\n9 - remover\n");
         scanf("%d",&op);
         switch(op){
             case 1:
@@ -157,6 +197,17 @@ int main()
                 break;
             case 7:
                 printf("qtd folhas: %d\n",quantidadeFolhas(raiz));
+                break;
+            case 8:
+                printf("altura arvore: %d\n",altuara(raiz));
+                break;
+
+            case 9:
+                printf("Elemento arvore: ");
+                EmOrdem(raiz);
+                printf("\nDigite o valor a ser removido: ");
+                scanf("%d",&valor);
+                raiz=remover(raiz,valor);
                 break;
             default:
                 if(op!=0)
