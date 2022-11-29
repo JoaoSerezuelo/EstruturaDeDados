@@ -139,8 +139,22 @@ NoArv* remover(NoArv *raiz, int chave){
                 printf("Elemento folha removido: %d!\n",chave);
                 return NULL;
             }
-            else{
-                //remove nos que possuem um 1 ou 2 filhos
+            else{//remove nos que possuem um 1 ou 2 filhos
+                //remove nos que possuem 2 filhos
+                if(raiz->esquerda!=NULL && raiz->direita!=NULL){
+
+                }
+                //remove nos com apenas 1 filho
+                else{
+                    NoArv *aux;
+                    if(raiz->esquerda!=NULL)
+                        aux=raiz->esquerda;
+                    else
+                        aux=raiz->direita;
+                    free(raiz);
+                    printf("Elemento com um filho removido: %d !\n",chave);
+                    return aux;
+                }
             }
         }
         else{
