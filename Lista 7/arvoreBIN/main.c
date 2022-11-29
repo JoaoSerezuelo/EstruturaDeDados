@@ -143,22 +143,22 @@ NoArv* remover(NoArv *raiz, int chave){
                 //remove nos que possuem 2 filhos
                 if(raiz->esquerda!=NULL && raiz->direita!=NULL){
                     //vou trocar o valor a ser removido de lugar para ele virar um no com um filho ou sem filho
-                    NoArv *aux=raiz->esquerda;
-                    while(aux->direita!=NULL)
+                    NoArv *aux=raiz->esquerda;//aux recebe o valor da esquerda
+                    while(aux->direita!=NULL)//aux caminha para a direita ate o ultimo no
                         aux=aux->direita;
-                    raiz->valor=aux->valor;
-                    aux->valor=chave;
+                    raiz->valor=aux->valor;//a posicao do no a ser removido recebe o valor do ultimo no da esquerda
+                    aux->valor=chave;//o ultimo no da esquerda recebe o valor a ser removido
                     printf("Elemento trocado: %d!\n",chave);
-                    raiz->esquerda=remover(raiz->esquerda,chave);
+                    raiz->esquerda=remover(raiz->esquerda,chave);//remove o ultimo no da esquerda
                     return raiz;
                 }
                 //remove nos com apenas 1 filho
                 else{
                     NoArv *aux;
-                    if(raiz->esquerda!=NULL)
-                        aux=raiz->esquerda;
+                    if(raiz->esquerda!=NULL)//se a esquerda for diferente de nula
+                        aux=raiz->esquerda;//aux recebe a esquerda
                     else
-                        aux=raiz->direita;
+                        aux=raiz->direita;//aux recebe a direita
                     free(raiz);
                     printf("Elemento com um filho removido: %d !\n",chave);
                     return aux;
@@ -167,9 +167,9 @@ NoArv* remover(NoArv *raiz, int chave){
         }
         else{
             if(chave<raiz->valor)
-                raiz->esquerda=remover(raiz->esquerda,chave);
+                raiz->esquerda=remover(raiz->esquerda,chave);//caminha para a esquerda
             else
-                raiz->direita=remover(raiz->direita,chave);
+                raiz->direita=remover(raiz->direita,chave);//caminha para a direita
             return raiz;
         }
     }
