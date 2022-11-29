@@ -142,7 +142,15 @@ NoArv* remover(NoArv *raiz, int chave){
             else{//remove nos que possuem um 1 ou 2 filhos
                 //remove nos que possuem 2 filhos
                 if(raiz->esquerda!=NULL && raiz->direita!=NULL){
-
+                    //vou trocar o valor a ser removido de lugar para ele virar um no com um filho ou sem filho
+                    NoArv *aux=raiz->esquerda;
+                    while(aux->direita!=NULL)
+                        aux=aux->direita;
+                    raiz->valor=aux->valor;
+                    aux->valor=chave;
+                    printf("Elemento trocado: %d!\n",chave);
+                    raiz->esquerda=remover(raiz->esquerda,chave);
+                    return raiz;
                 }
                 //remove nos com apenas 1 filho
                 else{
@@ -215,7 +223,6 @@ int main()
             case 8:
                 printf("altura arvore: %d\n",altuara(raiz));
                 break;
-
             case 9:
                 printf("Elemento arvore: ");
                 EmOrdem(raiz);
