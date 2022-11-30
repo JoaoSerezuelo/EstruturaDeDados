@@ -18,7 +18,7 @@ No* novoNo(int x){
         novo->altura = 0;
     }
     else
-        printf("\nERRO ao alocar n� em novoNo!\n");
+        printf("\nERRO ao alocar memoria!\n");
     return novo;
 }
 //maior subarvore
@@ -117,7 +117,7 @@ No* inserir(No *raiz, int x){
         else
             printf("\nInsercao nao realizada!\nO elemento %d a existe!\n", x);
     }
-
+    //atualiza a altura de todos os
     raiz->altura = maior(alturaDoNo(raiz->esquerdo), alturaDoNo(raiz->direito)) + 1;
 
     raiz = balancear(raiz);
@@ -170,10 +170,10 @@ No* remover(No *raiz, int chave) {
                 raiz->direito = remover(raiz->direito, chave);
         }
 
-        // Recalcula a altura de todos os n�s entre a raiz e o novo n� inserido
+        // Recalcula a altura de todos os nos entre a raiz e o no removido
         raiz->altura = maior(alturaDoNo(raiz->esquerdo), alturaDoNo(raiz->direito)) + 1;
 
-        // verifica a necessidade de rebalancear a �rvore
+        // verifica a necessidade de rebalancear a arvore
         raiz = balancear(raiz);
 
         return raiz;
