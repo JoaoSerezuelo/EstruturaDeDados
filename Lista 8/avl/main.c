@@ -23,7 +23,7 @@ No* novoNo(int x){
 }
 //maior subarvore
 short maior(short a, short b){
-    return (a > b)? a: b;
+    return (a > b)? a: b;//se a>b retorna a, se nao retorna b | são a altura da subarvore esquerda e direita
 }
 //  Retorna a altura de um no ou -1 caso ele seja null
 short alturaDoNo(No *no){
@@ -58,7 +58,7 @@ No* rotacaoEsquerda(No *r){//r e o no que foi identificado como desbalanceado pa
     return y;
 }
 //rotacao direita
-No* rotacaoDireita(No *r){//r e o no que foi identificado como desbalanceado para a esquerda    
+No* rotacaoDireita(No *r){//r e o no que foi identificado como desbalanceado para a esquerda
     No *y, *f;
 
     y = r->esquerdo;//y e o filho a esquerda de r
@@ -75,18 +75,18 @@ No* rotacaoDireita(No *r){//r e o no que foi identificado como desbalanceado par
 //rotacao dupla
 //rotacao esquerda direita
 No* rotacaoEsquerdaDireita(No *r){//r ta desbalanceado para a direita e seu filho a direita ta desbalanceado para a esquerda
-    r->esquerdo = rotacaoEsquerda(r->esquerdo);
-    return rotacaoDireita(r);
+    r->esquerdo = rotacaoEsquerda(r->esquerdo);//rotacao esquerda no filho a esquerda de r
+    return rotacaoDireita(r);//rotacao direita em r
 }
 //rotacao direita esquerda
 No* rotacaoDireitaEsquerda(No *r){//r ta desbalanceado para a esquerda e seu filho a esquerda ta desbalanceado para a direita
-    r->direito = rotacaoDireita(r->direito);
-    return rotacaoEsquerda(r);
+    r->direito = rotacaoDireita(r->direito);//rotacao a direita no filho a direita de r
+    return rotacaoEsquerda(r);//rotacao esquerda em r
 }
 //balanceamento
 No* balancear(No *raiz){
     short fb = fatorDeBalanceamento(raiz);
-
+    //regras de balanceamento
     if(fb < -1 && fatorDeBalanceamento(raiz->direito) <= 0){
         raiz = rotacaoEsquerda(raiz);
         printf("\nRotacao Esquerda\n");
@@ -103,6 +103,8 @@ No* balancear(No *raiz){
         raiz = rotacaoDireitaEsquerda(raiz);
         printf("\nRotacao Direita Esquerda\n");
     }
+    else//pra testes esse else
+        printf("\nrotacao nao necessaria\n");
     return raiz;
 }
 //insercao
