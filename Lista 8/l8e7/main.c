@@ -23,7 +23,7 @@ No* novoNo(int x){
 }
 //maior subarvore
 short maior(short a, short b){
-    return (a > b)? a: b;//se a>b retorna a, se nao retorna b | são a altura da subarvore esquerda e direita
+    return (a > b)? a: b;//se a>b retorna a, se nao retorna b | s�o a altura da subarvore esquerda e direita
 }
 //  Retorna a altura de um no ou -1 caso ele seja null
 short alturaDoNo(No *no){
@@ -40,7 +40,7 @@ short fatorDeBalanceamento(No *no){
     else
         return 0;
 }
-
+/*
 // rotacoes
 // rotcao esquerda
 No* rotacaoEsquerda(No *r){//r e o no que foi identificado como desbalanceado para a direita
@@ -89,24 +89,24 @@ No* balancear(No *raiz){
     //regras de balanceamento
     if(fb < -1 && fatorDeBalanceamento(raiz->direito) <= 0){
         raiz = rotacaoEsquerda(raiz);
-        printf("\nRotacao Esquerda\n");//print para teste
+        printf("\nRotacao Esquerda\n");
     }
     else if(fb > 1 && fatorDeBalanceamento(raiz->esquerdo) >= 0){
         raiz = rotacaoDireita(raiz);
-        printf("\nRotacao Direita\n");//print para teste
+        printf("\nRotacao Direita\n");
     }
     else if(fb > 1 && fatorDeBalanceamento(raiz->esquerdo) < 0){
         raiz = rotacaoEsquerdaDireita(raiz);
-        printf("\nRotacao Esquerda Direita\n");//print para teste
+        printf("\nRotacao Esquerda Direita\n");
     }
     else if(fb < -1 && fatorDeBalanceamento(raiz->direito) > 0){
         raiz = rotacaoDireitaEsquerda(raiz);
-        printf("\nRotacao Direita Esquerda\n");//print para teste
+        printf("\nRotacao Direita Esquerda\n");
     }
     else//pra testes esse else
         printf("\nrotacao nao necessaria\n");
     return raiz;
-}
+}*/
 //insercao
 No* inserir(No *raiz, int x){
     if(raiz == NULL)
@@ -122,7 +122,7 @@ No* inserir(No *raiz, int x){
     //atualiza a altura de todos os
     raiz->altura = maior(alturaDoNo(raiz->esquerdo), alturaDoNo(raiz->direito)) + 1;
 
-    raiz = balancear(raiz);
+   // raiz = balancear(raiz);
 
     return raiz;
 }
@@ -176,7 +176,7 @@ No* remover(No *raiz, int chave) {
         raiz->altura = maior(alturaDoNo(raiz->esquerdo), alturaDoNo(raiz->direito)) + 1;
 
         // verifica a necessidade de rebalancear a arvore
-        raiz = balancear(raiz);
+        //raiz = balancear(raiz);
 
         return raiz;
     }
@@ -195,14 +195,21 @@ void imprimir(No *raiz, int nivel){
         imprimir(raiz->esquerdo, nivel + 1);
     }
 }
-
+void verificaAvl(No *raiz){
+    if(raiz){
+        verificaAvl(raiz->esquerdo);//verifica a subarvore a esquerda
+        if(fatorDeBalanceamento(raiz) > 1 || fatorDeBalanceamento(raiz) < -1)//verifica se o no atual esta desbalanceado
+            printf("\nnao e avl!\n");//se estiver desbalanceado, a arvore nao e avl
+        verificaAvl(raiz->direito);//verifica a subarvore a direita
+    }
+}
 int main(){
 
     int opcao, valor;
     No *raiz = NULL;
 
     do{
-        printf("\n\n\t0 - Sair\n\t1 - Inserir\n\t2 - Remover\n\t3 - Imprimir\n\n");
+        printf("\n\n\t0 - Sair\n\t1 - Inserir\n\t2 - Remover\n\t3 - Imprimir\n\t4 - Verificar AVL\n\tOpcao: ");
         scanf("%d", &opcao);
 
         switch(opcao){
@@ -221,6 +228,9 @@ int main(){
             break;
         case 3:
             imprimir(raiz, 1);
+            break;
+        case 4:
+            verificaAvl(raiz);
             break;
         default:
             printf("\nOcao invalida!!!\n");
